@@ -1,4 +1,5 @@
 import logging
+import settings
 from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
 
 
@@ -20,7 +21,7 @@ def chat(update: Updater, context: CallbackContext):
 
 
 def main():
-    updtr = Updater('1449256444:AAEXKP965duuF7ufMEukRAH_8nBjSjt_k9E')
+    updtr = Updater(settings.TOKEN_TELEGRAM)
 
     updtr.dispatcher.add_handler(CommandHandler("start",start_bot))
     updtr.dispatcher.add_handler(MessageHandler(Filters.text,chat))
