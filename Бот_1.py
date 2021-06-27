@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                     filename='bot.log'
 )
 def start_bot(update: Updater, context: CallbackContext):
-    print(update)
+    
     mytext = """Привет {}
     я могу использовать только команду  /start =)""".format(update.message.chat.first_name)
     logging.info('User{} press /start'.format(update.message.chat.username))
