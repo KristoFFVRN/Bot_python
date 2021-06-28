@@ -36,7 +36,10 @@ def handle_text_messages(message):
         bot.register_next_step_handler(message, backup_beward)
     elif message.text == '/version':
         bot.send_message(message.from_user.id, "Введите ip-адрес!")
-        bot.register_next_step_handler(message, version_beward)    
+        bot.register_next_step_handler(message, version_beward) 
+    elif message.text == '/BlockCMS':
+        bot.send_message(message.from_user.id, "Введите ip-адрес!")
+        bot.register_next_step_handler(message, BlockCMS_beward)       
 def reboot_beward(message):
     global ip_adrr
     global URL
@@ -81,9 +84,36 @@ def backup_beward(message):
     URL = "http://" + ip_addr + "/cgi-bin/intercomdu_cgi?action=export&user=admin&pwd=admin"
     bot.send_message(message.from_user.id, URL)
 
+def BlockCMS_beward(message):
+    global Nomer_kvartiri
+    global ip_addr
+    ip_addr = message.text
+    print(ip_addr)
+    bot.send_message(message.from_user.id, "Введите номер квартиры!")
+    bot.register_next_step_handler(message, BlockCMS_1_beward)
+    #bot.send_message(message.from_user.id, "Что надо сделать?")
+    #bot.register_next_step_handler(message, BlockCMS_1_beward)
+    #if message.text == "Заблокировать":
+     #   URL1 = "http://" + ip_adr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=off&user=admin&pwd=admin"
+    #else:
+        #URL1 = "http://" + ip_adr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=on&user=admin&pwd=admin"   
+    #bot.send_message(message.from_user.id, URL1)
 
 
+def BlockCMS_1_beward(message):
+    global URL1
+    global Nomer_kvartiri
+    global ip_addr
+    Nomer_kvartiri = message.text
+    print(Nomer_kvartiri)
+    bot.send_message(message.from_user.id, "Заблокировать:")
+    URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=off&user=admin&pwd=admin"
+    bot.send_message(message.from_user.id, URL1)
+    bot.send_message(message.from_user.id, "Разблокировать:")
+    URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=on&user=admin&pwd=admin"   
+    bot.send_message(message.from_user.id, URL1)
 
+ы
 
 #def version_beward(message):
  #   global URL_GET
