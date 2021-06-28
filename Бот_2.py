@@ -33,7 +33,7 @@ def handle_text_messages(message):
         bot.register_next_step_handler(message, zvonok_beward)
     elif message.text == '/backup':
         bot.send_message(message.from_user.id, "Введите ip-адрес!")
-        bot.register_next_step_handler(message, _beward)
+        bot.register_next_step_handler(message, backup_beward)
     elif message.text == '/version':
         bot.send_message(message.from_user.id, "Введите ip-адрес!")
         bot.register_next_step_handler(message, version_beward) 
@@ -73,7 +73,7 @@ def backup_beward(message):
     global ip_addr
     ip_addr = message.text
     global URL
-    bot.send_message(message.from_user.id,'сохранение бекапаов панели:')
+    bot.send_message(message.from_user.id,'Сохранение бекапаов панели:')
     bot.send_message(message.from_user.id,'Cохранение №1: BAK-файл')  
     URL = "http://" + ip_addr + "/cgi-bin/config_cgi?action=backup&user=admin&pwd=admin"
     bot.send_message(message.from_user.id, URL)
