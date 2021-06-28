@@ -88,7 +88,6 @@ def BlockCMS_beward(message):
     global Nomer_kvartiri
     global ip_addr
     ip_addr = message.text
-    print(ip_addr)
     bot.send_message(message.from_user.id, "Введите номер квартиры!")
     bot.register_next_step_handler(message, BlockCMS_1_beward)
     #bot.send_message(message.from_user.id, "Что надо сделать?")
@@ -105,7 +104,6 @@ def BlockCMS_1_beward(message):
     global Nomer_kvartiri
     global ip_addr
     Nomer_kvartiri = message.text
-    print(Nomer_kvartiri)
     bot.send_message(message.from_user.id, "Заблокировать:")
     URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=off&user=admin&pwd=admin"
     bot.send_message(message.from_user.id, URL1)
@@ -113,7 +111,6 @@ def BlockCMS_1_beward(message):
     URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=on&user=admin&pwd=admin"   
     bot.send_message(message.from_user.id, URL1)
 
-ы
 
 #def version_beward(message):
  #   global URL_GET
