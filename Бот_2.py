@@ -11,9 +11,12 @@ from telebot import types
 
 ip_adrr = ''
 ip_adr = ''
+ip_addr = ''
 URL = ''
 URL1 = ''
+URL_GET = ''
 Nomer_kvartiri = ''
+
 nomer = 0
 bot = telebot.TeleBot(settings.TOKEN)
 
@@ -28,8 +31,12 @@ def handle_text_messages(message):
     elif message.text == '/zvonok':
         bot.send_message(message.from_user.id, "Введите ip-адрес!")
         bot.register_next_step_handler(message, zvonok_beward)
-
-
+    elif message.text == '/backup':
+        bot.send_message(message.from_user.id, "Введите ip-адрес!")
+        bot.register_next_step_handler(message, backup_beward)
+    elif message.text == '/version':
+        bot.send_message(message.from_user.id, "Введите ip-адрес!")
+        bot.register_next_step_handler(message, version_beward)    
 def reboot_beward(message):
     global ip_adrr
     global URL
@@ -48,9 +55,7 @@ def zvonok2_beward(message):
     if message.text != 0:
         nomer= message.text
         URL_GET = "http://" + ip_adr + "/cgi-bin/apartment_cgi?action=get&Number="+nomer+ "&user=admin&pwd=admin"
-        webbrowser.register('Chrome', None, webbrowser.BackgroundBrowser('C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'))
-        webbrowser.open_new(URL_GET)
-    bot.send_message(message.from_user.id, "Ввидите номер дозвона!")
+        bot.send_message(message.from_user.id, "Ввидите номер дозвона!")
     bot.register_next_step_handler(message, zvonok1_beward) 
     
 def zvonok1_beward(message):
@@ -61,6 +66,36 @@ def zvonok1_beward(message):
     bot.send_message(message.from_user.id, URL1)
 
     
+def backup_beward(message):
+    global ip_addr
+    ip_addr = message.text
+    global URL
+    bot.send_message(message.from_user.id,'сохранение бекапаов панели:')
+    bot.send_message(message.from_user.id,'Cохранение №1: BAK-файл')  
+    URL = "http://" + ip_addr + "/cgi-bin/config_cgi?action=backup&user=admin&pwd=admin"
+    bot.send_message(message.from_user.id, URL)
+    bot.send_message(message.from_user.id,'Cохранение №2: backup-ключей')  
+    URL = "http://" + ip_addr + "/cgi-bin/rfid_cgi?action=export&user=admin&pwd=admin"
+    bot.send_message(message.from_user.id, URL)
+    bot.send_message(message.from_user.id,'Cохранение №3: backup-ККМ')  
+    URL = "http://" + ip_addr + "/cgi-bin/intercomdu_cgi?action=export&user=admin&pwd=admin"
+    bot.send_message(message.from_user.id, URL)
 
+
+
+
+
+#def version_beward(message):
+ #   global URL_GET
+  #  global ip_adrr
+   # ip_addr= message.text
+ #   URL_GET = "http://" + ip_addr + "/cgi-bin/systeminfo_cgi?action=get"
+  #  headers = {
+   #         'Authorization': 'Basic YWRtaW46YWRtaW4=',
+    #        'Content-Type': 'application/json'
+     #   }
+    #response = requests.request("GET", URL_GET, headers=headers, timeout=1)
+    #line = response.text
+    #print(line)
 
 bot.polling()
