@@ -35,9 +35,7 @@ def reboot_beward(message):
     global URL
     ip_adrr = message.text
     URL = "http://" + ip_adrr + "/cgi-bin/restart_cgi?&user=admin&pwd=admin"
-    webbrowser.register('Chrome', None, webbrowser.BackgroundBrowser('C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'))
-    webbrowser.open_new(URL)
-    bot.send_message(message.from_user.id, "OK,Device is rebooting")
+    bot.send_message(message.from_user.id, URL)
 
 def zvonok_beward(message):
     global ip_adr
@@ -60,9 +58,7 @@ def zvonok1_beward(message):
     global Nomer_kvartiri
     Nomer_kvartiri = message.text
     URL1 = "http://" + ip_adr + "/cgi-bin/sip_cgi?action=call&Uri=" +Nomer_kvartiri + "&user=admin&pwd=admin"
-    webbrowser.register('Chrome', None, webbrowser.BackgroundBrowser('C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'))
-    webbrowser.open_new(URL1)
-    bot.send_message(message.from_user.id, "Вызов отправлен!")
+    bot.send_message(message.from_user.id, URL1)
 
     
 
