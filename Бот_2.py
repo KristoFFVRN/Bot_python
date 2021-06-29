@@ -39,7 +39,9 @@ def handle_text_messages(message):
         bot.register_next_step_handler(message, version_beward) 
     elif message.text == '/blockcms':
         bot.send_message(message.from_user.id, "Введите ip-адрес!")
-        bot.register_next_step_handler(message, BlockCMS_beward)       
+        bot.register_next_step_handler(message, BlockCMS_beward) 
+       
+        
 def reboot_beward(message):
     global ip_adrr
     global URL
