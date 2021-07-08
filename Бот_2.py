@@ -87,6 +87,7 @@ def backup_beward(message):
     bot.send_message(message.from_user.id, URL)
 
 def BlockCMS_beward(message):
+    
     global Nomer_kvartiri
     global ip_addr
     ip_addr = message.text
@@ -106,12 +107,21 @@ def BlockCMS_1_beward(message):
     global Nomer_kvartiri
     global ip_addr
     Nomer_kvartiri = message.text
-    bot.send_message(message.from_user.id, "Заблокировать:")
-    URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=off&user=admin&pwd=admin"
-    bot.send_message(message.from_user.id, URL1)
-    bot.send_message(message.from_user.id, "Разблокировать:")
-    URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=on&user=admin&pwd=admin"   
-    bot.send_message(message.from_user.id, URL1)
+    keyboard = types.InlineKeyboardMarkup()
+    key_block = types.InlineKeyboardButton(text='Блокировать', callback_data="block")
+    keyboard.add(key_block)
+    key_unblock = types.InlineKeyboardButton(text='Разблокировать', callback_data="unblock")
+    keyboard.add(key_unblock)
+    bot.send_message(message.from_user.id, "Что будем делать?", reply_markup=keyboard)
+    bot.register_next_step_handler(call, BlockCMS_1_beward)
+@bot.callback_query_handler(func=lambda call: True)
+def callback_woker(call):
+    if call.data == "block":
+        URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=off&user=admin&pwd=admin"
+        bot.send_message(message.from_user.id, URL1)
+    else :
+        URL1 = "http://" + ip_addr + "/cgi-bin/apartment_cgi?action=set&Number=" +Nomer_kvartiri + "&BlockCMS=on&user=admin&pwd=admin"   
+        bot.send_message(message.from_user.id, URL1)
 
 
 #def version_beward(message):
